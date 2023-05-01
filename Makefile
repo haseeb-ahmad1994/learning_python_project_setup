@@ -22,14 +22,14 @@ lint-mypy-report:
 lint-mypy:
 	@mypy .
 
-format: format-black format-isort
+format:	format-black	format-isort
 
-lint: lint-black lint-isort lint-flake8 lint-mypy
+lint:	lint-black	lint-isort	lint-flake8	lint-mypy
 
 unit-tests:
-	@pytest --doctest-modules
+	@pytest	--doctest-modules
 unit-tests-cov:
-	@pytest --doctest-modules --cov=src --cov-report term-missing --cov-report=html
+	@pytest	--doctest-modules --cov=src --cov-report term-missing --cov-report=html
 unit-tests-cov-fail:
 	@pytest --cov=src --cov-report term-missing --cov-report=html --cov-fail-under=80 --junitxml=pytest.xml | tee pytest-coverage.txt
 clean-cov:
@@ -44,3 +44,20 @@ docs-deploy: ## build & deploy documentation to "gh-pages" branch
 	@mkdocs gh-deploy -m "docs: update documentation" -v --force
 clean-docs: ## remove output files from mkdocs
 	@rm -rf site
+
+##@ Releases
+
+current-version: ## returns the current version
+	@semantic-release print-version --current
+
+next-version: ## returns the next version
+	@semantic-release print-version --next
+
+current-changelog: ## returns the current changelog
+	@semantic-release changelog --released
+
+next-changelog: ## returns the next changelog
+	@semantic-release changelog --unreleased
+
+publish-noop: ## publish command (no-operation mode)
+	@semantic-release publish --noop
