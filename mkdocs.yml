@@ -12,3 +12,10 @@ nav:
 
 # to navigate with `/site` content correctly
 use_directory_urls: false
+
+plugins:
+- search:
+- mkdocstrings:
+    handlers:
+      python:
+        paths: [src]
